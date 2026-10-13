@@ -33,7 +33,17 @@ public class MainActivity extends Activity {
         Button add=button("+ ADD AUDIO FILES",0xff334155);root.addView(add,new LinearLayout.LayoutParams(-1,dp(65)));add.setOnClickListener(v->pick());
         ScrollView scroll=new ScrollView(this);tracks=new LinearLayout(this);tracks.setOrientation(1);scroll.addView(tracks);root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
         LinearLayout controls=new LinearLayout(this);controls.setOrientation(0);root.addView(controls,new LinearLayout.LayoutParams(-1,dp(330)));
-        Button play=button("▶\nPLAY",0xff16834a),stop=button("■\nSTOP",0xffbd343b);
+        ImageButton play = new ImageButton(this);
+play.setImageResource(R.drawable.play_button);
+play.setScaleType(ImageView.ScaleType.FIT_CENTER);
+play.setBackgroundColor(Color.TRANSPARENT);
+play.setContentDescription("Play");
+
+ImageButton stop = new ImageButton(this);
+stop.setImageResource(R.drawable.stop_button);
+stop.setScaleType(ImageView.ScaleType.FIT_CENTER);
+stop.setBackgroundColor(Color.TRANSPARENT);
+stop.setContentDescription("Stop");
         LinearLayout.LayoutParams half=new LinearLayout.LayoutParams(0,-1,1);half.setMargins(dp(3),dp(3),dp(3),dp(3));controls.addView(play,half);LinearLayout.LayoutParams half2=new LinearLayout.LayoutParams(0,-1,1);half2.setMargins(dp(3),dp(3),dp(3),dp(3));controls.addView(stop,half2);
         play.setOnClickListener(v->{if(uris.isEmpty()) {pick();return;}if(selected>=uris.size())selected=0;Intent i=new Intent(this,PlaybackService.class).setAction("PLAY").putExtra("uri",uris.get(selected)).putExtra("repeat",repeat);startForegroundService(i);status.setText("Playing: "+names.get(selected));save();});
         stop.setOnClickListener(v->{startService(new Intent(this,PlaybackService.class).setAction("STOP"));status.setText("Stopped");});
