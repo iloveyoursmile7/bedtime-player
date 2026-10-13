@@ -106,6 +106,7 @@ public class MainActivity extends Activity {
         // PLAY: use the first photo as the button background.
         Button play = button("", Color.TRANSPARENT);
         play.setBackgroundResource(R.drawable.play_button);
+        play.setBackgroundTintList(null);
         play.setText("");
         play.setPadding(0, 0, 0, 0);
         play.setMinHeight(0);
@@ -116,6 +117,7 @@ public class MainActivity extends Activity {
         // STOP: use the second photo as the button background.
         Button stop = button("", Color.TRANSPARENT);
         stop.setBackgroundResource(R.drawable.stop_button);
+        play.setBackgroundTintList(null);
         stop.setText("");
         stop.setPadding(0, 0, 0, 0);
         stop.setMinHeight(0);
