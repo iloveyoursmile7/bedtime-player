@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
     private TextView status;
     private Button repeatButton;
     private int dp(float v){return (int)(v*getResources().getDisplayMetrics().density+.5f);}
-    private Button button(String label,int color){Button b=new Button(this);b.setText(label);b.setTextSize(25);b.setTextColor(Color.WHITE);b.setAllCaps(false);b.setBackgroundTintList(android.content.res.ColorStateList.valueOf(color));return b;}
+    private Button button(String label,int color){Button b=new Button(this);b.setText(label);b.setTextSize(31);b.setTextColor(Color.WHITE);b.setAllCaps(false);b.setBackgroundTintList(android.content.res.ColorStateList.valueOf(color));return b;}
     @Override public void onCreate(Bundle saved){super.onCreate(saved);
         getWindow().setStatusBarColor(Color.rgb(15,22,33));getWindow().setNavigationBarColor(Color.rgb(15,22,33));
         android.content.SharedPreferences p=getSharedPreferences("tracks",MODE_PRIVATE);
@@ -28,11 +28,11 @@ public class MainActivity extends Activity {
         ArrayList<String> ordered=new ArrayList<>(keys);Collections.sort(ordered);
         for(String entry:ordered){int cut=entry.indexOf('|');if(cut>0){names.add(entry.substring(cut+1));uris.add(entry.substring(0,cut));}}
         LinearLayout root=new LinearLayout(this);root.setOrientation(1);root.setPadding(dp(14),dp(14),dp(14),dp(14));root.setBackgroundColor(Color.rgb(15,22,33));setContentView(root);
-        TextView title=new TextView(this);title.setText("BEDTIME PLAYER");title.setTextColor(Color.WHITE);title.setTextSize(29);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(58)));
+        TextView title=new TextView(this);title.setText("송이와 민준이의 굿나잇 빗소리");title.setTextColor(Color.WHITE);title.setTextSize(24);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(82)));
         status=new TextView(this);status.setTextColor(0xffcbd5e1);status.setTextSize(18);status.setGravity(Gravity.CENTER);root.addView(status,new LinearLayout.LayoutParams(-1,dp(40)));
         Button add=button("+ ADD AUDIO FILES",0xff334155);root.addView(add,new LinearLayout.LayoutParams(-1,dp(65)));add.setOnClickListener(v->pick());
         ScrollView scroll=new ScrollView(this);tracks=new LinearLayout(this);tracks.setOrientation(1);scroll.addView(tracks);root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
-        LinearLayout controls=new LinearLayout(this);controls.setOrientation(0);root.addView(controls,new LinearLayout.LayoutParams(-1,dp(165)));
+        LinearLayout controls=new LinearLayout(this);controls.setOrientation(0);root.addView(controls,new LinearLayout.LayoutParams(-1,dp(330)));
         Button play=button("▶\nPLAY",0xff16834a),stop=button("■\nSTOP",0xffbd343b);
         LinearLayout.LayoutParams half=new LinearLayout.LayoutParams(0,-1,1);half.setMargins(dp(3),dp(3),dp(3),dp(3));controls.addView(play,half);LinearLayout.LayoutParams half2=new LinearLayout.LayoutParams(0,-1,1);half2.setMargins(dp(3),dp(3),dp(3),dp(3));controls.addView(stop,half2);
         play.setOnClickListener(v->{if(uris.isEmpty()) {pick();return;}if(selected>=uris.size())selected=0;Intent i=new Intent(this,PlaybackService.class).setAction("PLAY").putExtra("uri",uris.get(selected)).putExtra("repeat",repeat);startForegroundService(i);status.setText("Playing: "+names.get(selected));save();});
