@@ -116,6 +116,8 @@ public class MainActivity extends Activity {
         playImage.setImageResource(R.drawable.play_button);
         playImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
         playImage.setBackgroundColor(Color.TRANSPARENT);
+        playImage.setClickable(false);
+        playImage.setFocusable(false);
         playArea.addView(
             playImage,
             new FrameLayout.LayoutParams(-1, -1)
@@ -133,6 +135,8 @@ public class MainActivity extends Activity {
         stopImage.setImageResource(R.drawable.stop_button);
         stopImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
         stopImage.setBackgroundColor(Color.TRANSPARENT);
+        playImage.setClickable(false);
+        playImage.setFocusable(false);
         stopArea.addView(
             stopImage,
             new FrameLayout.LayoutParams(-1, -1)
