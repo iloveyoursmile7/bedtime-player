@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
     private Button button(String label, int color) {
         Button b = new Button(this);
         b.setText(label);
-        b.setTextSize(31);
+        b.setTextSize(24);
         b.setTextColor(Color.WHITE);
         b.setAllCaps(false);
         b.setBackgroundTintList(
@@ -98,44 +98,57 @@ public class MainActivity extends Activity {
 
         LinearLayout controls = new LinearLayout(this);
         controls.setOrientation(0);
+        controls.setGravity(Gravity.CENTER);
         root.addView(
             controls,
             new LinearLayout.LayoutParams(-1, dp(330))
         );
 
-        // PLAY: use the first photo as the button background.
-        Button play = button("", Color.TRANSPARENT);
-        play.setBackgroundResource(R.drawable.play_button);
-        play.setBackgroundTintList(null);
-        play.setText("");
-        play.setPadding(0, 0, 0, 0);
-        play.setMinHeight(0);
-        play.setMinimumHeight(0);
-        play.setStateListAnimator(null);
-        play.setContentDescription("Play");
+        // PLAY button: visible green fallback with the image on top.
+        FrameLayout playArea = new FrameLayout(this);
+        Button play = button("▶ PLAY", 0xff16834a);
+        playArea.addView(
+            play,
+            new FrameLayout.LayoutParams(-1, -1)
+        );
 
-        // STOP: use the second photo as the button background.
-        Button stop = button("", Color.TRANSPARENT);
-        stop.setBackgroundResource(R.drawable.stop_button);
-        play.setBackgroundTintList(null);
-        stop.setText("");
-        stop.setPadding(0, 0, 0, 0);
-        stop.setMinHeight(0);
-        stop.setMinimumHeight(0);
-        stop.setStateListAnimator(null);
-        stop.setContentDescription("Stop");
+        ImageView playImage = new ImageView(this);
+        playImage.setImageResource(R.drawable.play_button);
+        playImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        playImage.setBackgroundColor(Color.TRANSPARENT);
+        playArea.addView(
+            playImage,
+            new FrameLayout.LayoutParams(-1, -1)
+        );
+
+        // STOP button: visible red fallback with the image on top.
+        FrameLayout stopArea = new FrameLayout(this);
+        Button stop = button("■ STOP", 0xffbd343b);
+        stopArea.addView(
+            stop,
+            new FrameLayout.LayoutParams(-1, -1)
+        );
+
+        ImageView stopImage = new ImageView(this);
+        stopImage.setImageResource(R.drawable.stop_button);
+        stopImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        stopImage.setBackgroundColor(Color.TRANSPARENT);
+        stopArea.addView(
+            stopImage,
+            new FrameLayout.LayoutParams(-1, -1)
+        );
 
         LinearLayout.LayoutParams half =
             new LinearLayout.LayoutParams(0, -1, 1);
         half.setMargins(dp(3), dp(3), dp(3), dp(3));
-        controls.addView(play, half);
+        controls.addView(playArea, half);
 
         LinearLayout.LayoutParams half2 =
             new LinearLayout.LayoutParams(0, -1, 1);
         half2.setMargins(dp(3), dp(3), dp(3), dp(3));
-        controls.addView(stop, half2);
+        controls.addView(stopArea, half2);
 
-        play.setOnClickListener(v -> {
+        playArea.setOnClickListener(v -> {
             if (uris.isEmpty()) {
                 pick();
                 return;
@@ -153,7 +166,7 @@ public class MainActivity extends Activity {
             save();
         });
 
-        stop.setOnClickListener(v -> {
+        stopArea.setOnClickListener(v -> {
             startService(
                 new Intent(this, PlaybackService.class)
                     .setAction("STOP")
